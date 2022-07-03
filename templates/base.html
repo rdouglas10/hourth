@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <title>Products</title>
+
+  {% block extra_css %}
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+  {% endblock %}
+  
+</head>
+
+<body>
+  {% include 'includes/navbar.html' %}
+
+  {% block content %}
+ 
+  {% endblock %}
+
+
+{% block extra_js %}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        let table = new DataTable('#example', {
+        ajax: function (d, cb) {
+            fetch('products/json')
+                .then(response => response.json())
+                .then(data => cb(data));
+        },
+        columns: [
+            {"data": "product_url__image"},
+            {"data": "product_url"},
+            {"data": "product_url__created_at"},
+            {"data": "consult_date"},
+            {"data": "c"}
+        ]
+    } );
+} );
+    </script>
+
+{% endblock extra_js %}
+        
+        
+</body>
+
+</html>
